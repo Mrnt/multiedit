@@ -36,12 +36,6 @@ function initMultiEdit() {
 				
 		// shorten the a text and hide the custom fields
 		jQuery('#multiEditControl a').each( function(index) {
-			//var oldstr = jQuery(this).html();
-			//var newstr = oldstr.split('_');
-			//if (newstr[1]) {
-			//	 jQuery(this).html(newstr[1]);
-			//}
-			
 			var metaid = jQuery(this).attr('rel');
 			// find and hide the tr for multiedit custom fields
 			jQuery('tr#meta-'+metaid).addClass('mevalue').hide();
@@ -158,7 +152,6 @@ jQuery(document).ready(function() {
 		// force tinymcs visual mode
 		jQuery('#edButtonPreview').click();
 		jQuery('#content-tmce').click();
-
 		// reverts tinymce back to default thereby saving and open tab
 		jQuery('#default.multieditbutton').click();
 		// this clicks the update button (saves them) on the all custom fields
@@ -168,7 +161,6 @@ jQuery(document).ready(function() {
 	jQuery('input#publish').click(function() {
 		// force tinymcs visual mode
 		jQuery('#content-tmce').click();
-
 		// reverts tinymce back to default thereby saving and open tab
 		jQuery('#default.multieditbutton').click();
 		// this clicks the update button (saves them) on the all custom fields

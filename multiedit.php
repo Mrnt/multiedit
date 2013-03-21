@@ -4,8 +4,8 @@ Plugin Name:	MultiEdit
 Plugin URI:		https://github.com/Mrnt/multiedit.git
 Description:	Multi-Editable Region Support for Page Templates.
 Version:		0.1
-Author:			joshua.strebel
-Author URI:		http://www.maurentsoftware.com
+Author:			Maurent Software, joshua.strebel (http://Page.ly)
+Author URI:		http://www.maurent.com
 */
 
 /*
@@ -37,6 +37,7 @@ Author URI:		http://www.maurentsoftware.com
 |                                                                    |
 \--------------------------------------------------------------------/
 */
+
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
 

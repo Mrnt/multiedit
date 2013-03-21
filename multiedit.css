@@ -27,6 +27,7 @@
 |                                                                    |
 \--------------------------------------------------------------------/
 */
+
 #poststuff h2.nav-tab-wrapper {
 	padding: 0;	
 }
@@ -38,6 +39,7 @@
 #multiEditFreezer {
 	display:none;
 }
+
 tr#multishow td{
 	padding:10px;
 }
