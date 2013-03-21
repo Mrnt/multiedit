@@ -1,6 +1,6 @@
 /*
 /--------------------------------------------------------------------\
-|                                                                    |  
+|                                                                    |
 | License: GPL                                                       |
 |                                                                    |
 | Page.ly MultiEdit- Adds editable Blocks to page templates in       |
@@ -23,21 +23,21 @@
 | along with this program; if not, write to the                      |
 | Free Software Foundation, Inc.                                     |
 | 51 Franklin Street, Fifth Floor                                    |
-| Boston, MA  02110-1301, USA                                        |   
+| Boston, MA  02110-1301, USA                                        |
 |                                                                    |
 \--------------------------------------------------------------------/
 */
 
 function initMultiEdit() {
-	if(jQuery('#multiEditHidden span').length > 1) {
-		jQuery('#multiEditControl').append(jQuery('#multiEditHidden span'));
+	if (jQuery('#multiEditHidden a').length > 1) {
+		jQuery('#multiEditControl').append(jQuery('#multiEditHidden a'));
 		jQuery('#postdivrich').before(jQuery('#multiEditControl'));
-		jQuery('#postdivrich').attr('rel','default');
+		jQuery('#postdivrich').attr('rel', 'default');
 				
-		//shorten the span text and hide the custom fields
-		jQuery('#multiEditControl span').each( function(index) {
+		// shorten the a text and hide the custom fields
+		jQuery('#multiEditControl a').each( function(index) {
 			//var oldstr = jQuery(this).html();
-			//var newstr = oldstr.split('_');	
+			//var newstr = oldstr.split('_');
 			//if (newstr[1]) {
 			//	 jQuery(this).html(newstr[1]);
 			//}
@@ -46,33 +46,31 @@ function initMultiEdit() {
 			// find and hide the tr for multiedit custom fields
 			jQuery('tr#meta-'+metaid).addClass('mevalue').hide();
 		});
-		
+
 		jQuery('table#list-table tbody').append('<tr id="multishow"><td class="left"><span>Show/Hide MultiEdit fields</span></td><td></td></tr>');
-		
-		jQuery('a#edButtonPreview,a#content-tmce').click(function(){
-			jQuery('#multiEditControl span').show();
+
+		jQuery('a#edButtonPreview, a#content-tmce').click(function() {
+			jQuery('#multiEditControl a').show();
 			jQuery('#multiEditControl em').remove();
 		});
-	
-		jQuery('a#edButtonHTML,a#content-html').click(function(){
-			jQuery('#multiEditControl span').hide();
-			jQuery('#multiEditControl').append('<em>Enable Visual Editing to use MultiEdit</em>');	
+
+		jQuery('a#edButtonHTML,a#content-html').click(function() {
+			jQuery('#multiEditControl a').hide();
+			jQuery('#multiEditControl').append('<em>Enable Visual Editing to use MultiEdit</em>');
 		});
-	
-		//alert(jQuery('#postdivrich').html());
-		if(jQuery('#postdivrich').html() == null) {
+
+		// alert(jQuery('#postdivrich').html());
+		if (jQuery('#postdivrich').html() == null) {
 			jQuery('#multiEditControl').hide();
 		}
-		
 
-	
 	} else {
-		// if not multiedit regions defined.. hide the divs... 
+		// if not multiedit regions defined.. hide the divs...
 		// This should probably be done on the php side
 		jQuery('#multiEditHidden').hide();
 		jQuery('#multiEditControl').hide();
 	}
-	
+
 }
 
 function getTinyMCEContent() {
@@ -84,101 +82,104 @@ function toggleTinyMCE(newcontent) {
 	var iframeRef = jQuery('#content_ifr');
 	jQuery(iframeRef).contents().find('body').html(newcontent);
 	jQuery('#editorcontainer textarea').text(newcontent);
-
 }
 
 function copyDefaultToFreezer(content) {
 	jQuery('#multiEditFreezer').html(content);
 }
+
 function getFreezer() {
 	return jQuery('#multiEditFreezer').html();
 }
-function triggerSelected(idref,newid) {
-	jQuery('span.multieditbutton').removeClass('selected');
-	jQuery(idref).addClass('selected');
-	jQuery('#postdivrich').attr('rel',newid);
+
+function triggerSelected(idref, newid) {
+	jQuery('a.multieditbutton').removeClass('nav-tab-active');
+	jQuery(idref).addClass('nav-tab-active');
+	jQuery('#postdivrich').attr('rel', newid);
 }
+
 function getSelectedPostDiv() {
 	return jQuery('#postdivrich').attr('rel');
 }
+
 function getMetaContent(metaID) {
-	return jQuery("tr#meta-"+metaID+" td textarea").val();
-}
-function setMetaContent(metaID,string) {
-	return jQuery("tr#meta-"+metaID+" td textarea").val(string);
+	return jQuery("tr#meta-" + metaID + " td textarea").val();
 }
 
+function setMetaContent(metaID, string) {
+	return jQuery("tr#meta-" + metaID + " td textarea").val(string);
+}
 
 // ready
-jQuery(document).ready( function() {
-	
-	// if multiedit link is clicked lets store current tinymce string somwhere so we can retreive it later
-	// then retrieve stored string and place into tinyMCE 	
-	jQuery('span.multieditbutton').click(function() {
-		
+jQuery(document).ready(function() {
+
+	// if multiedit link is clicked lets store current tinymce string somwhere
+	// so we can retreive it later
+	// then retrieve stored string and place into tinyMCE
+	jQuery('a.multieditbutton').click(function() {
+
 		// the tinyMCE iframe
 		var iframeRef = jQuery('#content_ifr');
-		// id of this multiedit 
+		// id of this multiedit
 		var thisID = jQuery(this).attr('id');
 		var thisWPMetaID = jQuery(this).attr('rel');
-		
-		// get current rel attr #postdivrich that will tell use what content is inside of it
-		var selectedpostdiv = getSelectedPostDiv();	
+
+		// get current rel attr #postdivrich that will tell use what content is
+		// inside of it
+		var selectedpostdiv = getSelectedPostDiv();
 
 		// main the_content() tinymce
-		if(selectedpostdiv=="default") {
+		if (selectedpostdiv == "default") {
 			copyDefaultToFreezer(getTinyMCEContent());
 		} else {
-			// currently showing a multiedit region, lets update the meta textarea before switching	
-			var active = jQuery('span#'+selectedpostdiv).attr('rel');
-			setMetaContent(active,getTinyMCEContent());
+			// currently showing a multiedit region, lets update the meta
+			// textarea before switching
+			var active = jQuery('#' + selectedpostdiv).attr('rel');
+			setMetaContent(active, getTinyMCEContent());
 		}
-		
-	 	// Toggle the actual tinymce content
-		if (thisID == 'default') {	
+
+		// Toggle the actual tinymce content
+		if (thisID == 'default') {
 			// if default, grab content from freezer
 			toggleTinyMCE(getFreezer());
 		} else {
 			// grab the content from the meta field
 			toggleTinyMCE(getMetaContent(thisWPMetaID));
-			
 		}
-		
+
 		// trigger class changes for active button
-		triggerSelected(this,thisID);
+		triggerSelected(this, thisID);
 	});
-	
-	
-	// we want to catch the submit action to do some cleanup 
+
+	// we want to catch the submit action to do some cleanup
 	// and save the meta fields before wordpress posts the form
-	
-	jQuery('form#post').submit( function() {	
-			// force tinymcs visual mode
-			jQuery('a#edButtonPreview').click();
-			jQuery('a#content-tmce').click();
 
- 			// reverts tinymce back to default thereby saving and open tab
-			jQuery('span#default.multieditbutton').click();
-			// this clicks the update button (saves them) on the all custom fields
-			jQuery('#postcustomstuff input.updatemeta').click();
-		
+	jQuery('form#post').submit(function() {
+		// force tinymcs visual mode
+		jQuery('#edButtonPreview').click();
+		jQuery('#content-tmce').click();
+
+		// reverts tinymce back to default thereby saving and open tab
+		jQuery('#default.multieditbutton').click();
+		// this clicks the update button (saves them) on the all custom fields
+		jQuery('#postcustomstuff input.updatemeta').click();
 	});
 
-	jQuery('input#publish').click( function () {
-			// force tinymcs visual mode
-			jQuery('a#content-tmce').click();
+	jQuery('input#publish').click(function() {
+		// force tinymcs visual mode
+		jQuery('#content-tmce').click();
 
- 			// reverts tinymce back to default thereby saving and open tab
-			jQuery('span#default.multieditbutton').click();
-			// this clicks the update button (saves them) on the all custom fields
-			jQuery('#postcustomstuff input.updatemeta').click();
+		// reverts tinymce back to default thereby saving and open tab
+		jQuery('#default.multieditbutton').click();
+		// this clicks the update button (saves them) on the all custom fields
+		jQuery('#postcustomstuff input.updatemeta').click();
 	});
-	
+
 	// show or hide the multiedit custom field table rows
-	jQuery('table#list-table tr#multishow span').live( 'click' , function (){
+	jQuery('table#list-table tr#multishow span').live('click', function() {
 		jQuery('table#list-table tbody tr.mevalue').toggle();
 	});
-	
+
 	// start
 	initMultiEdit();
 	jQuery('#nonactive').addClass('upgrade fade error');

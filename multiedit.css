@@ -27,41 +27,10 @@
 |                                                                    |
 \--------------------------------------------------------------------/
 */
-#multiEditControl {
-	border-bottom: 1px solid #21759B;
-	height:22px;
-	margin:3em 0 1em 0;
-	display: block;
-}
-#multiEditControl span.multieditbutton {
-	margin:0 5px;
-	background:#f1f1f1;
-	border:1px solid #ccc;
-	border-bottom:0px;
-	padding:5px 10px;
-	cursor: pointer;
-	color:#21759B;
-
-	border-top-right-radius: 6px;  
-	border-top-left-radius: 6px; 
-	-moz-border-radius-topleft:6px;
-	-moz-border-radius-topright: 6px; 
-	-webkit-border-top-left-radius: 6px;
-	-webkit-border-top-right-radius: 6px;
+#poststuff h2.nav-tab-wrapper {
+	padding: 0;	
 }
 
-#multiEditControl span.multieditbutton:hover {
-	background: #fff;
-}
-#multiEditControl span.multieditbutton.selected {
-	background:#fff;
-	border-color: #21759B;
-	padding:6px 10px;
-}
-#multiEditControl span.multieditbutton.notactive {
-	background:#ccc;
-	color:#999;
-}
 #multiEditDiv {
    padding: 15px 5px 0 5px;
 }
