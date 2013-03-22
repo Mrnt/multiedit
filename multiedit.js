@@ -33,7 +33,7 @@ function initMultiEdit() {
 		jQuery('#multiEditControl').append(jQuery('#multiEditHidden a'));
 		jQuery('#postdivrich').before(jQuery('#multiEditControl'));
 		jQuery('#postdivrich').attr('rel', 'default');
-				
+
 		// shorten the a text and hide the custom fields
 		jQuery('#multiEditControl a').each( function(index) {
 			var metaid = jQuery(this).attr('rel');
@@ -43,12 +43,12 @@ function initMultiEdit() {
 
 		jQuery('table#list-table tbody').append('<tr id="multishow"><td class="left"><span>Show/Hide MultiEdit fields</span></td><td></td></tr>');
 
-		jQuery('a#edButtonPreview, a#content-tmce').click(function() {
+		jQuery('#edButtonPreview, #content-tmce').click(function() {
 			jQuery('#multiEditControl a').show();
 			jQuery('#multiEditControl em').remove();
 		});
 
-		jQuery('a#edButtonHTML,a#content-html').click(function() {
+		jQuery('#edButtonHTML, #content-html').click(function() {
 			jQuery('#multiEditControl a').hide();
 			jQuery('#multiEditControl').append('<em>Enable Visual Editing to use MultiEdit</em>');
 		});
@@ -110,7 +110,8 @@ jQuery(document).ready(function() {
 	// if multiedit link is clicked lets store current tinymce string somwhere
 	// so we can retreive it later
 	// then retrieve stored string and place into tinyMCE
-	jQuery('a.multieditbutton').click(function() {
+	jQuery('a.multieditbutton').click(function(event) {
+		event.stopPropagation()
 
 		// the tinyMCE iframe
 		var iframeRef = jQuery('#content_ifr');

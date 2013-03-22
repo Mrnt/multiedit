@@ -40,8 +40,18 @@ Author URI:		http://www.maurent.com
 
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
+if (!function_exists('multieditDisplay')) {
 
-define('ME_PLUGINASSETS',plugins_url( '' , __FILE__ ));
+$me_basepath = dirname(__FILE__);
+
+if (strpos($me_path, PLUGINDIR) !== false) {
+	// we are a plugin
+	define('ME_PLUGINASSETS', plugins_url( '' , __FILE__ ));
+} else {
+	// we are in a template
+	$t_path = get_template_directory();
+	define('ME_PLUGINASSETS', get_template_directory_uri() .substr($me_basepath, strpos($me_basepath, $t_path) + strlen($t_path)));
+}
 
 /**
  * Add options menu item
@@ -90,7 +100,7 @@ function me_options_page() {
 						<tr>
 							<th><?php _e('Short Code Support:' ); ?></th>
 							<td><input type="radio" name="opts[shortcode]" value="1"
-							<?php echo $opts['shortcodes'] == 1 ?  'checked="checked"' : ''?> /> <label>Yes</label>&nbsp;&nbsp; <input
+							<?php echo $opts['shortcodes'] == 1 ?  'checked="checked"' : ''?> /> <label>Yes</label>&nbsp;&nbsp;<input
 								type="radio" name="opts[shortcode]" value="0" <?php echo $opts['shortcodes'] == 0 ?  'checked="checked"' : ''?> />
 								<label>No</label><br /> <span class="description"><?php _e('Enables Shortcode support for multi-edit regions. Caution this will enable all filters for the region like including social media buttons and other such nonsense in your output.' ); ?>
 								</span>
@@ -177,18 +187,19 @@ function multieditAdminHeader() {
 function drawMultieditHTML($meta, $presentregions) {
 	global $post;
 	echo '<h2 id="multiEditControl" class="nav-tab-wrapper"></h2>';
-	echo '<div id="multiEditHidden"><a class="nav-tab multieditbutton nav-tab-active" id="default">Main Content</a>';
+	echo '<div id="multiEditHidden" style="display:none;"><a class="nav-tab multieditbutton nav-tab-active" id="default">Main Content</a>';
 	
 	// this adds the multiedit tabs that appear above the tinymce editor
 	if (is_array($meta)) {
+		$fields = array();
 		foreach($meta as $item) {
 			if (preg_match('/^multiedit_(.+)/',$item['meta_key'],$matches)) {
 				// lets check regions defined in this template ($presentregions) against those in meta
 				// so we can treat meta values that may be in $post, but not in this template differently
 				//print_r($matches);
-				$notactive = false;
+				$notactive = '';
 				if (!array_key_exists($matches[1], $presentregions)) {
-					$notactive = 'notactive';
+					$notactive = ' notactive';
 					$fields[] = $matches[1];
 				}
 				$mkey = trim($item['meta_key']);
@@ -200,7 +211,7 @@ function drawMultieditHTML($meta, $presentregions) {
 				// Underscores to Spaces:
 				$mclean = str_replace("_", " ", $mclean);
 
-				echo '<a class="nav-tab multieditbutton '.$notactive.'" id="hs_'.$mkey.'" rel="'.$mid.'">'.$mclean.'</a><input type="hidden" id="hs_'.$mkey.'" name="'.$mkey.'" value="'.htmlspecialchars($mval).'" />';
+				echo '<a class="nav-tab multieditbutton'.$notactive.'" id="hs_'.$mkey.'" rel="'.$mid.'">'.$mclean.'</a><input type="hidden" id="hs_'.$mkey.'" name="'.$mkey.'" value="'.htmlspecialchars($mval).'" />';
 
 			}
 		}
@@ -209,8 +220,8 @@ function drawMultieditHTML($meta, $presentregions) {
 			echo '<div id="nonactive" style="display:none"><p>'.implode(', ',$fields).' region(s) are not declared in the template.</p></div>';
 		}
 	}
-
-	echo '<div id="multiEditFreezer" style="display:none">'. $post->post_content ."</div></div>\n";
+	echo "</div>\n";
+	echo '<div id="multiEditFreezer" style="display:none">'. $post->post_content ."</div>\n";
 }
 
 /**
@@ -262,4 +273,5 @@ function doMultiMeta() {
 		return false;
 	}
 }
-?>
+
+}
