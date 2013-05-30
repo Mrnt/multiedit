@@ -1,7 +1,7 @@
 MultiEdit Plugin
 =========
 
-Enables multiple editable content blocks on WordPress page templates by adding tabs above the WYSIWYG editor, with one tabe for each content area in the template.
+Enables multiple editable content blocks on WordPress page templates by adding tabs above the WYSIWYG editor, with one tab for each content area in the template.
 
 Derived from <a href="http://wordpress.org/extend/plugins/pagely-multiedit/">Page.ly MultiEdit</a> by joshua.strebel
 
