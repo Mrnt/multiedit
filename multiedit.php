@@ -44,7 +44,7 @@ if (!function_exists('multieditDisplay')) {
 
 $me_basepath = dirname(__FILE__);
 
-if (strpos($me_path, PLUGINDIR) !== false) {
+if (strpos($me_basepath, PLUGINDIR) !== false) {
 	// we are a plugin
 	define('ME_PLUGINASSETS', plugins_url( '' , __FILE__ ));
 } else {
@@ -128,7 +128,7 @@ function me_options_page() {
 /**
  * Only hook in if we are on the admin pages for post or page editing 
  */
-if (in_array(basename($_SERVER['PHP_SELF']), array('post.php','page.php')) && $_GET['action'] == 'edit' ) {
+if (in_array(basename($_SERVER['PHP_SELF']), array('post.php','page.php')) && isset($_GET['action']) && $_GET['action'] == 'edit' ) {
 	add_action('init', 'multiedit');
 }
 
